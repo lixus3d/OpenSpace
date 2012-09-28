@@ -2,20 +2,21 @@ OBJECTS.OpenSpace = function(){
 
     var OpenSpace = this;
 
-    this.players        = new OBJECTS.players();
-	this.units			= new OBJECTS.units();
-	this.items			= new OBJECTS.items();
-	this.projectiles	= new OBJECTS.projectiles();
+    this.players        = new OBJECTS.players(OpenSpace);
+	this.units			= new OBJECTS.units(OpenSpace);
+	this.items			= new OBJECTS.items(OpenSpace);
+	this.projectiles	= new OBJECTS.projectiles(OpenSpace);
 
 	this.ticker			= null;
 
     this.init = function(){
-        OpenSpace.player = new OBJECTS.player();
+        OpenSpace.player = new OBJECTS.player(OpenSpace);
         OpenSpace.players.addPlayer(this.player);
     };
 
     this.tick = function(){
         //console.log(OpenSpace.player.name);
+        OpenSpace.units.tick();
     };
 
     /**
