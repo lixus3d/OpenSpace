@@ -2,6 +2,7 @@ OBJECTS.OpenSpace = function(){
 
     var OpenSpace = this;
 
+    this.player         = null;
     this.players        = new OBJECTS.players(OpenSpace);
 	this.units			= new OBJECTS.units(OpenSpace);
 	this.items			= new OBJECTS.items(OpenSpace);
