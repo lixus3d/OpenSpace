@@ -13,7 +13,15 @@ var OBJECTS = {};
  */
 var RULES = {
 	config: {
-		tickInterval: 20
+		tickInterval: 1,
+		space: {
+			width: 1600,
+			height: 900
+		},
+		spaceCraft: {
+			maxSpeed: 3,
+			minSpeed: 1
+		}
 	}
 };
 

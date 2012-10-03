@@ -7,6 +7,7 @@ OBJECTS.OpenSpace = function(){
 	this.units			= new OBJECTS.units(OpenSpace);
 	this.items			= new OBJECTS.items(OpenSpace);
 	this.projectiles	= new OBJECTS.projectiles(OpenSpace);
+    this.drawer         = new OBJECTS.drawer(OpenSpace);
 
 	this.ticker			= null;
 
@@ -18,6 +19,7 @@ OBJECTS.OpenSpace = function(){
     this.tick = function(){
         //console.log(OpenSpace.player.name);
         OpenSpace.units.tick();
+        OpenSpace.drawer.tick();
     };
 
     /**

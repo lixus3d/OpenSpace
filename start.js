@@ -1,3 +1,7 @@
 
 var OpenSpace = new OBJECTS.OpenSpace();
-OpenSpace.start();
+
+window.setTimeout(function(){
+	OpenSpace.start();
+},100);
+
