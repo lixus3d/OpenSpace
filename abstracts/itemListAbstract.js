@@ -9,7 +9,7 @@ ABSTRACTS.itemListAbstract = function(OpenSpaceObject){
 
     var items = this;
 
-    items.OpenSapce = null;
+    items.OpenSpace = null;
 
     items.list = [];  // list of item
     items.idList = [];
