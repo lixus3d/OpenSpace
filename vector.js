@@ -12,6 +12,11 @@ OBJECTS.vector = function(x,y){
 		vector.set(x,y);
 	};
 
+	this.clone = function(){
+		var V = new OBJECTS.vector(vector.x,vector.y);
+		return V;
+	};
+
 	this.randomize = function(maxX,maxY){
 		var signX = Math.random()>0.5 ? 1 : -1;
 		var signY = Math.random()>0.5 ? 1 : -1;
@@ -35,6 +40,8 @@ OBJECTS.vector = function(x,y){
 	};
 
 	this.mult = function(V){
+		if(!(V instanceof OBJECTS.vector)) V = new OBJECTS.vector(V,V);
+
 		vector.x *= V.x;
 		vector.y *= V.y;
 	};
@@ -58,6 +65,17 @@ OBJECTS.vector = function(x,y){
 		}
 	};
 
+	this.perpendicular = function(direction){
+		if(direction===undefined) direction=1
+		var V = new OBJECTS.vector();
+		V.x = vector.y*direction;
+		V.y = vector.x*direction*-1;
+		return V;
+	}
+
+	this.toString = function(){
+		return vector.x+' '+vector.y;
+	}
 
 	this.init(x,y);
 };
