@@ -19,6 +19,7 @@ OBJECTS.OpenSpace = function(){
     this.tick = function(){
         //console.log(OpenSpace.player.name);
         OpenSpace.units.tick();
+        OpenSpace.projectiles.tick();
         OpenSpace.drawer.tick();
     };
 

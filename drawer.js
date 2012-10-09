@@ -22,6 +22,11 @@ OBJECTS.drawer = function(OpenSpaceObject){
 			//log(unit.getId());
 		});
 
+		$.each(OpenSpace.projectiles.list,function(k,projectile){
+			projectile.draw(drawer.context);
+			//log(unit.getId());
+		});
+
     };
 
     this.init(OpenSpaceObject);

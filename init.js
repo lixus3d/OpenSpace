@@ -13,14 +13,23 @@ var OBJECTS = {};
  */
 var RULES = {
 	config: {
-		tickInterval: 1,
+		tickInterval: 15,
 		space: {
 			width: 1600,
 			height: 900
 		},
 		spaceCraft: {
-			maxSpeed: 3,
-			minSpeed: 1
+			maxSpeed: 5,
+			minSpeed: 0.5,
+			maxSteering: 0.05,
+			accelerate: 0.2,
+			decelerate: 0.03,
+			breaking: 0.15,
+			steering: 0.015
+		},
+		weapon: {
+			life: 70,
+			speed: 12
 		}
 	}
 };
