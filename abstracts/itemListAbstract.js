@@ -55,8 +55,8 @@ ABSTRACTS.itemListAbstract = function(OpenSpaceObject){
      * Return a item by its Id
      */
     this.getItemById = function(itemId){
-    	if(items.list[itemId] != undefined ) return items.list[itemId];
-    	return null;
+        if(items.list[itemId] !== undefined ) return items.list[itemId];
+        return null;
     };
 
     /**

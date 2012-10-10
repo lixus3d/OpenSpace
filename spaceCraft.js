@@ -164,6 +164,22 @@ OBJECTS.spaceCraft = function(OpenSpaceObject, playerObject){
         }
 
         spaceCraft.move();
+        spaceCraft.addStack();
+
+    };
+
+    this.addStack = function(){
+        spaceCraft.OpenSpace.socket.addStack({
+            name:'spaceCraft',
+            id: spaceCraft.getId(),
+            x: spaceCraft.x,
+            y: spaceCraft.y,
+            vector: {
+                x: spaceCraft.vector.x,
+                y: spaceCraft.vector.y
+            },
+            speed: spaceCraft.speed
+        });
     };
 
     this.init(OpenSpaceObject,playerObject);

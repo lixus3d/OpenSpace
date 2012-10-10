@@ -5,9 +5,12 @@ var app = require('http').createServer(),
 app.listen(800);
 
 io.sockets.on('connection', function (socket) {
-  socket.emit('message', { message: 'Welcome !!!' });
-	socket.on('mousePosition',function(data) {
+  socket.emit('message', { message: 'Welcome new client !!!' });
+
+	socket.on('actions',function(data) {
 		//console.log('mousePosition receive');
-		socket.broadcast.emit('updatePosition', data);
+		socket.broadcast.emit('update', data);
 	});
+
+
 });

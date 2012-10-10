@@ -13,7 +13,7 @@ var OBJECTS = {};
  */
 var RULES = {
 	config: {
-		tickInterval: 15,
+		tickInterval: 25,
 		space: {
 			width: 1600,
 			height: 900

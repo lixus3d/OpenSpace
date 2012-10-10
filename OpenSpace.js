@@ -8,6 +8,7 @@ OBJECTS.OpenSpace = function(){
 	this.items			= new OBJECTS.items(OpenSpace);
 	this.projectiles	= new OBJECTS.projectiles(OpenSpace);
     this.drawer         = new OBJECTS.drawer(OpenSpace);
+    this.socket         = new OBJECTS.socket(OpenSpace);
 
 	this.ticker			= null;
 

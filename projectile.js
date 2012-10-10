@@ -41,6 +41,7 @@ OBJECTS.projectile = function(OpenSpaceObject, spaceCraftObject){
         projectile.vector.normalize();
         projectile.vector.mult(projectile.speed);
 
+        projectile.addStack();
         //spaceCraft.steering
     };
 
@@ -79,6 +80,22 @@ OBJECTS.projectile = function(OpenSpaceObject, spaceCraftObject){
         if(projectile.y < 0 ) projectile.y = RULES.config.space.height;
     };
 
+
+    this.addStack = function(){
+        projectile.OpenSpace.socket.addStack({
+            name:'projectile',
+            id: projectile.getId(),
+            spaceCraftId: projectile.spaceCraft.getId(),
+            x: projectile.x,
+            y: projectile.y,
+            vector: {
+                x: projectile.vector.x,
+                y: projectile.vector.y
+            },
+            speed: projectile.speed
+        });
+    };
+
     /**
      * Do it every motor tick
      * @return {[type]} [description]
@@ -87,9 +104,10 @@ OBJECTS.projectile = function(OpenSpaceObject, spaceCraftObject){
         projectile.move();
         projectile.life -= 1;
         if(projectile.life<=0){
-        	log('a pu !');
+        	//log('a pu !');
 			projectile.OpenSpace.projectiles.killProjectile(projectile.getId());
 		}
+
     };
 
     this.init(OpenSpaceObject, spaceCraftObject);
