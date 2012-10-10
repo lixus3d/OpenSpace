@@ -1,5 +1,5 @@
 
-OBJECTS.spaceCraft = function(OpenSpaceObject, playerObject){
+OBJECTS.spaceCraft = function(OpenSpaceObject, playerObject, id){
 
 	var spaceCraft = this;
 
@@ -169,17 +169,19 @@ OBJECTS.spaceCraft = function(OpenSpaceObject, playerObject){
     };
 
     this.addStack = function(){
-        spaceCraft.OpenSpace.socket.addStack({
-            name:'spaceCraft',
-            id: spaceCraft.getId(),
-            x: spaceCraft.x,
-            y: spaceCraft.y,
-            vector: {
-                x: spaceCraft.vector.x,
-                y: spaceCraft.vector.y
-            },
-            speed: spaceCraft.speed
-        });
+        if(spaceCraft.player !== null){
+            spaceCraft.OpenSpace.socket.addStack({
+                name:'spaceCraft',
+                id: spaceCraft.getId(),
+                x: spaceCraft.x,
+                y: spaceCraft.y,
+                vector: {
+                    x: spaceCraft.vector.x,
+                    y: spaceCraft.vector.y
+                },
+                speed: spaceCraft.speed
+            });
+        }
     };
 
     this.init(OpenSpaceObject,playerObject);

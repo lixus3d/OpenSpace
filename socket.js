@@ -29,24 +29,25 @@ OBJECTS.socket = function(OpenSpaceObject){
 		$.each(data,function(k,action){
 			switch(action.name){
 				case 'projectile':
-					var id = action.id
+					var id = action.id;
 					var spaceCraftId = action.spaceCraftId;
 					var spaceCraftObject = socket.OpenSpace.units.getItemById(spaceCraftId);
 
 					if(!(object = socket.OpenSpace.units.getItemById(id))){ // If we can't get the item , we must create it
-						object = new OBJECTS.projectile(socket.OpenSpace, spaceCraftObject)
+						object = new OBJECTS.projectile(socket.OpenSpace, spaceCraftObject);
+						object.id = id;
 					}
 					object.x = action.x;
 					object.y = action.y;
 					object.vector.x = action.vector.x;
 					object.vector.y = action.vector.y;
 					object.speed = action.speed;
-
 				break;
 				case 'spaceCraft':
-					var id = action.id
+					var id = action.id;
 					if(!(object = socket.OpenSpace.units.getItemById(id))){ // If we can't get the item , we must create it
-						object = new OBJECTS.spaceCraft(socket.OpenSpace, null)
+						object = new OBJECTS.spaceCraft(socket.OpenSpace, null);
+						object.id = id;
 					}
 					object.x = action.x;
 					object.y = action.y;
