@@ -9,7 +9,7 @@ OBJECTS.socket = function(OpenSpaceObject){
 
 	this.init = function(OpenSpaceObject){
 		socket.OpenSpace = OpenSpaceObject;
-		log('connecting to localhost');
+		log('connecting to server');
 		socket.connector = io.connect('http://192.168.21.186:800');
 		socket.handle();
 		socket.sendStack();
