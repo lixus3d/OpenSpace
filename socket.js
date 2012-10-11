@@ -10,7 +10,7 @@ OBJECTS.socket = function(OpenSpaceObject){
 	this.init = function(OpenSpaceObject){
 		socket.OpenSpace = OpenSpaceObject;
 		log('connecting to localhost');
-		socket.connector = io.connect('http://localhost:800');
+		socket.connector = io.connect('http://192.168.21.186:800');
 		socket.handle();
 		socket.sendStack();
 	};
@@ -32,10 +32,8 @@ OBJECTS.socket = function(OpenSpaceObject){
 					var id = action.id;
 					var spaceCraftId = action.spaceCraftId;
 					var spaceCraftObject = socket.OpenSpace.units.getItemById(spaceCraftId);
-
 					if(!(object = socket.OpenSpace.units.getItemById(id))){ // If we can't get the item , we must create it
-						object = new OBJECTS.projectile(socket.OpenSpace, spaceCraftObject);
-						object.id = id;
+						object = new OBJECTS.projectile(socket.OpenSpace, spaceCraftObject, id);
 					}
 					object.x = action.x;
 					object.y = action.y;
@@ -46,8 +44,7 @@ OBJECTS.socket = function(OpenSpaceObject){
 				case 'spaceCraft':
 					var id = action.id;
 					if(!(object = socket.OpenSpace.units.getItemById(id))){ // If we can't get the item , we must create it
-						object = new OBJECTS.spaceCraft(socket.OpenSpace, null);
-						object.id = id;
+						object = new OBJECTS.spaceCraft(socket.OpenSpace, null, id);
 					}
 					object.x = action.x;
 					object.y = action.y;
@@ -65,7 +62,7 @@ OBJECTS.socket = function(OpenSpaceObject){
 			socket.stack = [];
 			socket.connector.emit('actions',data);
 		}
-		window.setTimeout(socket.sendStack,1);
+		window.setTimeout(socket.sendStack,10);
 	};
 
 	this.message = function(data){

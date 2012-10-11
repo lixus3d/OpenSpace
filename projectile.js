@@ -1,4 +1,4 @@
-OBJECTS.projectile = function(OpenSpaceObject, spaceCraftObject){
+OBJECTS.projectile = function(OpenSpaceObject, spaceCraftObject, id){
 
 	var projectile = this;
 
@@ -23,7 +23,9 @@ OBJECTS.projectile = function(OpenSpaceObject, spaceCraftObject){
 	this.setId = function(id){projectile.id = id;};
     this.getId = function(){return projectile.id;};
 
-    this.init = function(OpenSpaceObject, spaceCraftObject){
+    this.init = function(OpenSpaceObject, spaceCraftObject, id){
+        if(id===undefined) id = 0;
+        projectile.setId(id);
         projectile.OpenSpace = OpenSpaceObject;
         projectile.spaceCraft = spaceCraftObject;
 
@@ -82,18 +84,20 @@ OBJECTS.projectile = function(OpenSpaceObject, spaceCraftObject){
 
 
     this.addStack = function(){
-        projectile.OpenSpace.socket.addStack({
-            name:'projectile',
-            id: projectile.getId(),
-            spaceCraftId: projectile.spaceCraft.getId(),
-            x: projectile.x,
-            y: projectile.y,
-            vector: {
-                x: projectile.vector.x,
-                y: projectile.vector.y
-            },
-            speed: projectile.speed
-        });
+        if(projectile.spaceCraft.player !== null){
+            projectile.OpenSpace.socket.addStack({
+                name:'projectile',
+                id: projectile.getId(),
+                spaceCraftId: projectile.spaceCraft.getId(),
+                x: projectile.x,
+                y: projectile.y,
+                vector: {
+                    x: projectile.vector.x,
+                    y: projectile.vector.y
+                },
+                speed: projectile.speed
+            });
+        }
     };
 
     /**
@@ -110,5 +114,5 @@ OBJECTS.projectile = function(OpenSpaceObject, spaceCraftObject){
 
     };
 
-    this.init(OpenSpaceObject, spaceCraftObject);
+    this.init(OpenSpaceObject, spaceCraftObject, id);
 }

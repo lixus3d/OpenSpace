@@ -29,7 +29,9 @@ OBJECTS.spaceCraft = function(OpenSpaceObject, playerObject, id){
 	this.setId = function(id){spaceCraft.id = id;};
     this.getId = function(){return spaceCraft.id;};
 
-    this.init = function(OpenSpaceObject, playerObject){
+    this.init = function(OpenSpaceObject, playerObject, id){
+        if(id===undefined) id = 0;
+        spaceCraft.setId(id);
         spaceCraft.OpenSpace = OpenSpaceObject;
         spaceCraft.player = playerObject;
         spaceCraft.x = Math.random()*RULES.config.space.width ;
@@ -164,7 +166,9 @@ OBJECTS.spaceCraft = function(OpenSpaceObject, playerObject, id){
         }
 
         spaceCraft.move();
-        spaceCraft.addStack();
+        if(spaceCraft.speedDo||spaceCraft.steeringDo){
+            spaceCraft.addStack();
+        }
 
     };
 
@@ -184,6 +188,6 @@ OBJECTS.spaceCraft = function(OpenSpaceObject, playerObject, id){
         }
     };
 
-    this.init(OpenSpaceObject,playerObject);
+    this.init(OpenSpaceObject, playerObject, id);
 
 };

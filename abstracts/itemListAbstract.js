@@ -31,8 +31,7 @@ ABSTRACTS.itemListAbstract = function(OpenSpaceObject){
         if(item.getId()===0){
             uid = items.generateId();
             item.setId(uid);
-        }
-        else uid = item.getId();
+        } else uid = item.getId();
 
         items.list[uid] = item;
         items.listLength++;
