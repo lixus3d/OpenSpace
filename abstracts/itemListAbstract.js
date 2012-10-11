@@ -45,7 +45,7 @@ ABSTRACTS.itemListAbstract = function(OpenSpaceObject){
         // push the id to the idList
         //this.idList.push(itemId);
 
-        item.activate();
+        //item.activate();
     };
 
     this.generateId = function(){

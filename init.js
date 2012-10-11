@@ -13,7 +13,8 @@ var OBJECTS = {};
  */
 var RULES = {
 	config: {
-		tickInterval: 15,
+		tickInterval: 20,
+		respawnTime: 3000,
 		space: {
 			width: 1600,
 			height: 900
@@ -25,11 +26,17 @@ var RULES = {
 			accelerate: 0.2,
 			decelerate: 0.03,
 			breaking: 0.15,
-			steering: 0.015
+			steering: 0.015,
+			life: 400
 		},
 		weapon: {
-			life: 70,
-			speed: 12
+			lifeTime: 70,
+			speed: 12,
+			impact: 8
+		},
+		score: {
+			touch: 3,
+			kill: 100
 		}
 	}
 };
@@ -40,30 +47,11 @@ function log(data){
 	}
 }
 
-/*
-
-var socket = io.connect('http://localhost:800');
-
-socket.on('updatePosition', function (data) {
-	//console.log(data);
-	updatePosition(data);
-});
-
-socket.on('message', function (data) {
-	console.log(data.message);
-});
-
 $(document).ready(function(){
-	$(document).mousemove(function(e){
-		//console.log('mousemove');
-		tick++;
-		var posX = e.pageX;
-		var posY = e.pageY;
-		if(tick >= updateEveryTick){
-			//console.log('mousePosition send');
-			socket.emit('mousePosition', { x: posX, y: posY });
-			tick=0;
-		}
+	$('input[name="playerName"]').change(function(){
+		OpenSpace.player.name = $(this).val();
+	});
+	$('input[name="playerColor"]').change(function(){
+		OpenSpace.player.color = $(this).val();
 	});
 });
-*/

@@ -8,6 +8,7 @@ OBJECTS.spaceCraft = function(OpenSpaceObject, playerObject, id){
 	spaceCraft.id = 0; // unit "number" in the RTS
 	spaceCraft.x = 10;
 	spaceCraft.y = 50;
+    spaceCraft.life = 0;
 
     spaceCraft.speed = 1;
     spaceCraft.vector = new OBJECTS.vector();
@@ -34,8 +35,10 @@ OBJECTS.spaceCraft = function(OpenSpaceObject, playerObject, id){
         spaceCraft.setId(id);
         spaceCraft.OpenSpace = OpenSpaceObject;
         spaceCraft.player = playerObject;
+
         spaceCraft.x = Math.random()*RULES.config.space.width ;
         spaceCraft.y = Math.random()*RULES.config.space.height ;
+        spaceCraft.life = Math.random()*RULES.config.spaceCraft.life ;
 
         spaceCraft.OpenSpace.units.addUnit(spaceCraft);
 
@@ -52,11 +55,13 @@ OBJECTS.spaceCraft = function(OpenSpaceObject, playerObject, id){
         context.beginPath();
         halfSize = shape.size / 2;
         context.rect(spaceCraft.x-halfSize  , spaceCraft.y-halfSize, shape.size, shape.size);
-        context.fillStyle = '#8ED6FF';
+        context.fillStyle = spaceCraft.player.color ;
         context.fill();
         context.lineWidth = shape.borderWidth;
         context.strokeStyle = 'black';
         context.stroke();
+        context.fillStyle = '#555';
+        context.fillText(spaceCraft.player.name,spaceCraft.x-halfSize,spaceCraft.y+15);
     };
 
     this.move = function(){
@@ -75,6 +80,16 @@ OBJECTS.spaceCraft = function(OpenSpaceObject, playerObject, id){
         if(spaceCraft.x < 0 ) spaceCraft.x = RULES.config.space.width;
         if(spaceCraft.y > RULES.config.space.height ) spaceCraft.y = 0;
         if(spaceCraft.y < 0 ) spaceCraft.y = RULES.config.space.height;
+    };
+
+    this.touch = function(projectileObject){
+        if(projectileObject.spaceCraft.player !== null){ // if it's the player projectile
+            OpenSpace.player.addScore(RULES.config.score.touch); // score the actual player
+        }
+        spaceCraft.life -= RULES.config.weapon.impact;
+        if(spaceCraft.life <= 0){
+            spaceCraft.kill();
+        }
     };
 
     /**
@@ -172,18 +187,26 @@ OBJECTS.spaceCraft = function(OpenSpaceObject, playerObject, id){
 
     };
 
+    this.kill = function(){
+        spaceCraft.OpenSpace.units.killUnit(spaceCraft.getId());
+        spaceCraft.player.kill();
+    };
+
     this.addStack = function(){
         if(spaceCraft.player !== null){
             spaceCraft.OpenSpace.socket.addStack({
                 name:'spaceCraft',
                 id: spaceCraft.getId(),
+                clr: spaceCraft.color,
+                scN: spaceCraft.name,
+                pId: spaceCraft.player.getId(),
                 x: spaceCraft.x,
                 y: spaceCraft.y,
-                vector: {
+                v: {
                     x: spaceCraft.vector.x,
                     y: spaceCraft.vector.y
                 },
-                speed: spaceCraft.speed
+                s: spaceCraft.speed
             });
         }
     };

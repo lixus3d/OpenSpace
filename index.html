@@ -36,6 +36,7 @@
 			'spaceCraft',
 			'projectile',
 			'socket',
+			'scoreBoard',
 			'OpenSpace',
 			/*
 			* Let's go !
@@ -51,9 +52,11 @@
 		}
     </script>
 </head>
-<body>
+<body style="margin:0;padding:0">
 	<div class="gameArea">
-		<canvas id="gameCanvas" width="1600" height="900"></canvas>
+		<input type="text" name="playerName" value="" style="position:absolute;opacity:0.5"/>
+		<input type="text" name="playerColor" value="#FFFFFF" style="position:absolute;opacity:0.5;top:25px"/>
+		<canvas id="gameCanvas" width="1600" height="900" style="background-color:#000"></canvas>
 	</div>
 </body>
 </html>

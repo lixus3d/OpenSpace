@@ -8,7 +8,7 @@ OBJECTS.projectile = function(OpenSpaceObject, spaceCraftObject, id){
 	projectile.id = 0; // projectile "number" in the RTS
 	projectile.x = 10;
 	projectile.y = 50;
-	projectile.life = null;
+	projectile.lifeTime = null;
 
 
     projectile.speed = 1;
@@ -16,8 +16,7 @@ OBJECTS.projectile = function(OpenSpaceObject, spaceCraftObject, id){
     projectile.steering = 0;
 
     projectile.rectangle = {
-      width: 2,
-      height: 2
+      size: 2
     };
 
 	this.setId = function(id){projectile.id = id;};
@@ -32,7 +31,7 @@ OBJECTS.projectile = function(OpenSpaceObject, spaceCraftObject, id){
         projectile.x = projectile.spaceCraft.x + projectile.spaceCraft.vector.x ;
         projectile.y = projectile.spaceCraft.y + projectile.spaceCraft.vector.y ;
 
-        projectile.life = RULES.config.weapon.life;
+        projectile.lifeTime = RULES.config.weapon.lifeTime;
 
         projectile.OpenSpace.projectiles.addProjectile(projectile);
 
@@ -54,7 +53,7 @@ OBJECTS.projectile = function(OpenSpaceObject, spaceCraftObject, id){
     this.draw = function(context){
         var shape = projectile.rectangle;
         context.beginPath();
-        context.rect(projectile.x, projectile.y, shape.width, shape.height);
+        context.rect(projectile.x, projectile.y, shape.size, shape.size);
         context.fillStyle = '#FF0000';
         context.fill();
 
@@ -82,20 +81,40 @@ OBJECTS.projectile = function(OpenSpaceObject, spaceCraftObject, id){
         if(projectile.y < 0 ) projectile.y = RULES.config.space.height;
     };
 
+    this.touching = function(){
+        for(uid in projectile.OpenSpace.units.list){
+            var spaceCraft = projectile.OpenSpace.units.list[uid];
+            if(spaceCraft.getId() == projectile.spaceCraft.getId()) continue;
+            var spaceCraftSize = spaceCraft.rectangle.size;
+            var spaceCraftHalfSize = spaceCraftSize/2;
+
+            if(
+                spaceCraft.x - spaceCraftHalfSize <= projectile.x && spaceCraft.x + spaceCraftHalfSize >= projectile.x &&
+                spaceCraft.y - spaceCraftHalfSize <= projectile.y && spaceCraft.y + spaceCraftHalfSize >= projectile.y
+                ){
+                spaceCraft.touch(projectile);
+                projectile.kill();
+            }
+        }
+    };
+
+    this.kill = function(){
+        projectile.OpenSpace.projectiles.killProjectile(projectile.getId());
+    };
 
     this.addStack = function(){
         if(projectile.spaceCraft.player !== null){
             projectile.OpenSpace.socket.addStack({
                 name:'projectile',
                 id: projectile.getId(),
-                spaceCraftId: projectile.spaceCraft.getId(),
+                scId: projectile.spaceCraft.getId(),
                 x: projectile.x,
                 y: projectile.y,
-                vector: {
+                v: {
                     x: projectile.vector.x,
                     y: projectile.vector.y
                 },
-                speed: projectile.speed
+                s: projectile.speed
             });
         }
     };
@@ -106,10 +125,10 @@ OBJECTS.projectile = function(OpenSpaceObject, spaceCraftObject, id){
      */
     this.tick = function(){
         projectile.move();
-        projectile.life -= 1;
-        if(projectile.life<=0){
-        	//log('a pu !');
-			projectile.OpenSpace.projectiles.killProjectile(projectile.getId());
+        projectile.touching();
+        projectile.lifeTime -= 1;
+        if(projectile.lifeTime<=0){
+            projectile.kill();
 		}
 
     };

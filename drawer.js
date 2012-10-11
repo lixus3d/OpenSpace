@@ -17,15 +17,13 @@ OBJECTS.drawer = function(OpenSpaceObject){
 
 		drawer.context.clearRect(0,0,drawer.canvas.width,drawer.canvas.height);
 
-		$.each(OpenSpace.units.list,function(k,unit){
-			unit.draw(drawer.context);
-			//log(unit.getId());
-		});
+		for(id in OpenSpace.units.list ){
+			OpenSpace.units.list[id].draw(drawer.context);
+		}
 
-		$.each(OpenSpace.projectiles.list,function(k,projectile){
-			projectile.draw(drawer.context);
-			//log(unit.getId());
-		});
+		for(id in OpenSpace.projectiles.list ){
+			OpenSpace.projectiles.list[id].draw(drawer.context);
+		}
 
     };
 

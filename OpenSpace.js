@@ -9,12 +9,15 @@ OBJECTS.OpenSpace = function(){
 	this.projectiles	= new OBJECTS.projectiles(OpenSpace);
     this.drawer         = new OBJECTS.drawer(OpenSpace);
     this.socket         = new OBJECTS.socket(OpenSpace);
+    this.scoreBoard     = new OBJECTS.scoreBoard(OpenSpace);
 
 	this.ticker			= null;
 
     this.init = function(){
         OpenSpace.player = new OBJECTS.player(OpenSpace);
         OpenSpace.players.addPlayer(this.player);
+        OpenSpace.player.spawn();
+        OpenSpace.player.addStack();
     };
 
     this.tick = function(){
@@ -22,6 +25,7 @@ OBJECTS.OpenSpace = function(){
         OpenSpace.units.tick();
         OpenSpace.projectiles.tick();
         OpenSpace.drawer.tick();
+        OpenSpace.scoreBoard.tick();
     };
 
     /**
