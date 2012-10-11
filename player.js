@@ -23,6 +23,10 @@ OBJECTS.player = function(OpenSpaceObject, id){
 		player.OpenSpace = OpenSpaceObject;
     };
 
+    this.isCurrentPlayer = function(){
+    	return player.getId() == player.OpenSpace.player.getId();
+    };
+
     this.spawn = function(){
 		player.newSpaceCraft();
 		player.handle();
@@ -85,8 +89,10 @@ OBJECTS.player = function(OpenSpaceObject, id){
 
     this.kill = function(){
         delete player.spaceCraft ;
-        if(player.spawnTimeout) window.clearTimeout(player.spawnTimeout);
-        player.spawnTimeout = window.setTimeout(player.spawn,RULES.config.respawnTime);
+        if(player.isCurrentPlayer()){
+        	if(player.spawnTimeout) window.clearTimeout(player.spawnTimeout);
+        	player.spawnTimeout = window.setTimeout(player.spawn,RULES.config.respawnTime);
+        }
     };
 
     this.addStack = function(){

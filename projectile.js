@@ -103,7 +103,7 @@ OBJECTS.projectile = function(OpenSpaceObject, spaceCraftObject, id){
     };
 
     this.addStack = function(){
-        if(projectile.spaceCraft.player !== null){
+        if(projectile.spaceCraft.player.isCurrentPlayer()){
             projectile.OpenSpace.socket.addStack({
                 name:'projectile',
                 id: projectile.getId(),

@@ -19,6 +19,7 @@ OBJECTS.spaceCraft = function(OpenSpaceObject, playerObject, id){
     spaceCraft.speedDo = null;
     spaceCraft.steeringDo = null;
     spaceCraft.shootDo = null;
+    spaceCraft.lifeDo = null;
 
 	spaceCraft.player = null;
 
@@ -83,10 +84,11 @@ OBJECTS.spaceCraft = function(OpenSpaceObject, playerObject, id){
     };
 
     this.touch = function(projectileObject){
-        if(projectileObject.spaceCraft.player !== null){ // if it's the player projectile
+        if(projectileObject.spaceCraft.player.isCurrentPlayer()){ // if it's the player projectile
             OpenSpace.player.addScore(RULES.config.score.touch); // score the actual player
         }
         spaceCraft.life -= RULES.config.weapon.impact;
+        spaceCraft.lifeDo = 'touch';
         if(spaceCraft.life <= 0){
             spaceCraft.kill();
         }
@@ -110,7 +112,7 @@ OBJECTS.spaceCraft = function(OpenSpaceObject, playerObject, id){
 
     this.actionShoot = function(action){
         spaceCraft.shootDo = action;
-    }
+    };
 
     /**
      * Accelerate the spaceCraft
@@ -181,10 +183,10 @@ OBJECTS.spaceCraft = function(OpenSpaceObject, playerObject, id){
         }
 
         spaceCraft.move();
-        if(spaceCraft.speedDo||spaceCraft.steeringDo){
+        if(spaceCraft.speedDo||spaceCraft.steeringDo||spaceCraft.lifeDo||(spaceCraft.autoStack>RULES.config.autoStack)){
             spaceCraft.addStack();
         }
-
+        spaceCraft.autoStack++;
     };
 
     this.kill = function(){
@@ -193,12 +195,12 @@ OBJECTS.spaceCraft = function(OpenSpaceObject, playerObject, id){
     };
 
     this.addStack = function(){
-        if(spaceCraft.player !== null){
+        if(spaceCraft.player.isCurrentPlayer()){
             spaceCraft.OpenSpace.socket.addStack({
                 name:'spaceCraft',
                 id: spaceCraft.getId(),
-                clr: spaceCraft.color,
-                scN: spaceCraft.name,
+                clr: spaceCraft.player.color,
+                scN: spaceCraft.player.name,
                 pId: spaceCraft.player.getId(),
                 x: spaceCraft.x,
                 y: spaceCraft.y,
@@ -206,6 +208,7 @@ OBJECTS.spaceCraft = function(OpenSpaceObject, playerObject, id){
                     x: spaceCraft.vector.x,
                     y: spaceCraft.vector.y
                 },
+                l: spaceCraft.life,
                 s: spaceCraft.speed
             });
         }

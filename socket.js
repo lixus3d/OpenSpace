@@ -12,12 +12,19 @@ OBJECTS.socket = function(OpenSpaceObject){
 		log('connecting to server');
 		socket.connector = io.connect('http://192.168.21.186:800');
 		socket.handle();
+		socket.addPlayer();
 		socket.sendStack();
 	};
 
 	this.handle = function(){
 		socket.connector.on('message',socket.message);
 		socket.connector.on('update',socket.receive);
+	};
+
+	this.addPlayer = function(){
+		socket.addStack({
+			name:'newconnection'
+		});
 	};
 
 
@@ -28,6 +35,10 @@ OBJECTS.socket = function(OpenSpaceObject){
 	this.receive = function(data){
 		$.each(data,function(k,action){
 			switch(action.name){
+				case 'newconnection':
+					// In case a person is connecting, send your player
+					socket.OpenSpace.player.addStack();
+				break;
 				case 'projectile':
 					var id = action.id;
 					var spaceCraftId = action.scId;
@@ -54,6 +65,7 @@ OBJECTS.socket = function(OpenSpaceObject){
 					object.y = action.y;
 					object.vector.x = action.v.x;
 					object.vector.y = action.v.y;
+					object.life = action.l;
 					object.speed = action.s;
 				break;
 				case 'player':
