@@ -38,7 +38,8 @@ OBJECTS.player = function(OpenSpaceObject, id){
 
 	this.addScore = function(amount){
 		player.score += amount;
-		log(player.score);
+		player.addStack();
+		//log(player.score);
 	};
 
     this.handle = function(){
@@ -89,19 +90,22 @@ OBJECTS.player = function(OpenSpaceObject, id){
 
     this.kill = function(){
         delete player.spaceCraft ;
+        player.killed++;
         if(player.isCurrentPlayer()){
-        	if(player.spawnTimeout) window.clearTimeout(player.spawnTimeout);
-        	player.spawnTimeout = window.setTimeout(player.spawn,RULES.config.respawnTime);
+			if(player.spawnTimeout) window.clearTimeout(player.spawnTimeout);
+			player.spawnTimeout = window.setTimeout(player.spawn,RULES.config.respawnTime);
         }
     };
 
     this.addStack = function(){
-        if( player.getId() == player.OpenSpace.player.getId() ){
+        if( player.isCurrentPlayer() ){
             player.OpenSpace.socket.addStack({
                 name:'player',
                 id: player.getId(),
                 pN: player.name,
-                clr: player.color
+                clr: player.color,
+                scr: player.score,
+                kld: player.killed
             });
         }
     };
