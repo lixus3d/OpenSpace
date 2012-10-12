@@ -10,6 +10,8 @@ OBJECTS.spaceCraft = function(OpenSpaceObject, playerObject, id){
 	spaceCraft.y = 50;
     spaceCraft.life = 0;
 
+    spaceCraft.autoStack = 0;
+
     spaceCraft.speed = 1;
     spaceCraft.vector = new OBJECTS.vector();
     spaceCraft.steering = 0;
@@ -69,11 +71,12 @@ OBJECTS.spaceCraft = function(OpenSpaceObject, playerObject, id){
         spaceCraft.x += spaceCraft.vector.x;
         spaceCraft.y += spaceCraft.vector.y;
 
-        var perpendicular = spaceCraft.vector.perpendicular(-1);
-        //perpendicular.normalize();
-        perpendicular.mult(new OBJECTS.vector(spaceCraft.steering,spaceCraft.steering));
-        spaceCraft.vector.add(perpendicular);
-
+        if(spaceCraft.steering!==0){
+            var perpendicular = spaceCraft.vector.perpendicular(-1);
+            //perpendicular.normalize();
+            perpendicular.mult(new OBJECTS.vector(spaceCraft.steering,spaceCraft.steering));
+            spaceCraft.vector.add(perpendicular);
+        }
         spaceCraft.vector.normalize();
         spaceCraft.vector.mult(spaceCraft.speed);
 
@@ -212,6 +215,7 @@ OBJECTS.spaceCraft = function(OpenSpaceObject, playerObject, id){
                 s: spaceCraft.speed
             });
         }
+        spaceCraft.autoStack=0;
     };
 
     this.init(OpenSpaceObject, playerObject, id);
