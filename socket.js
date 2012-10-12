@@ -76,6 +76,8 @@ OBJECTS.socket = function(OpenSpaceObject){
 					}
 					object.name = action.pN;
 					object.color = action.clr;
+					object.score = action.scr;
+					object.killed = action.kld;
 				break;
 			}
 		});
