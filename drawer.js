@@ -3,7 +3,7 @@ OBJECTS.drawer = function(OpenSpaceObject){
 
 	var drawer = this;
 
-	drawer.OpenSapce = null;
+	drawer.OpenSpace = null;
 	drawer.canvas = null;
 	drawer.context = null;
 
