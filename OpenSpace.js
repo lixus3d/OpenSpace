@@ -28,6 +28,36 @@ OBJECTS.OpenSpace = function(){
         OpenSpace.scoreBoard.tick();
     };
 
+    this.hex2rgb = function(hex){
+        if ( hex[0] == '#' ) {
+                hex = hex.substr(1);
+        }
+        if ( hex.length == 6 ) {
+                r = parseInt(hex[0]+hex[1],16);
+                g = parseInt(hex[2]+hex[3],16);
+                b = parseInt(hex[4]+hex[5],16);
+        } else if ( strlen( hex ) == 3 ) {
+                r = parseInt(hex[0]+hex[1],16);
+                g = parseInt(hex[2]+hex[3],16);
+                b = parseInt(hex[4]+hex[5],16);
+        }
+        return {
+            r: r,
+            g: g,
+            b: b
+        };
+    };
+
+    this.rgb2hex = function(r,g,b){
+        var rgb = [r.toString(16),g.toString(16),b.toString(16)];
+        for (var i=0;i<3;i++) {
+            if (rgb[i].length==1) rgb[i]=rgb[i]+rgb[i];
+        }
+        if(rgb[0][0]==rgb[0][1] && rgb[1][0]==rgb[1][1] && rgb[2][0]==rgb[2][1])
+            return '#'+rgb[0][0]+rgb[1][0]+rgb[2][0];
+        return '#'+rgb[0]+rgb[1]+rgb[2];
+    };
+
     /**
      * Start the game
      */
