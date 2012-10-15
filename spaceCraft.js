@@ -41,7 +41,7 @@ OBJECTS.spaceCraft = function(OpenSpaceObject, playerObject, id){
 
         spaceCraft.x = Math.random()*RULES.config.space.width ;
         spaceCraft.y = Math.random()*RULES.config.space.height ;
-        spaceCraft.life = Math.random()*RULES.config.spaceCraft.life ;
+        spaceCraft.life = RULES.config.spaceCraft.life ;
 
         spaceCraft.OpenSpace.units.addUnit(spaceCraft);
 
@@ -64,7 +64,7 @@ OBJECTS.spaceCraft = function(OpenSpaceObject, playerObject, id){
         context.strokeStyle = 'black';
         context.stroke();
         context.fillStyle = '#555';
-        context.fillText(spaceCraft.player.name,spaceCraft.x-halfSize,spaceCraft.y+15);
+        context.fillText(spaceCraft.life,spaceCraft.x-halfSize,spaceCraft.y+15);
     };
 
     this.move = function(){
