@@ -21,7 +21,7 @@ var RULES = {
 			height: 900
 		},
 		spaceCraft: {
-			maxSpeed: 5,
+			maxSpeed: 6,
 			minSpeed: 0.5,
 			maxSteering: 0.07,
 			accelerate: 0.2,
@@ -31,8 +31,8 @@ var RULES = {
 			life: 400
 		},
 		weapon: {
-			lifeTime: 70,
-			speed: 12,
+			lifeTime: 85,
+			speed: 14,
 			impact: 8
 		},
 		score: {
