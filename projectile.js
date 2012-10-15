@@ -9,6 +9,7 @@ OBJECTS.projectile = function(OpenSpaceObject, spaceCraftObject, id){
 	projectile.x = 10;
 	projectile.y = 50;
 	projectile.lifeTime = null;
+    projectile.color = null;
 
 
     projectile.speed = 1;
@@ -54,10 +55,26 @@ OBJECTS.projectile = function(OpenSpaceObject, spaceCraftObject, id){
         var shape = projectile.rectangle;
         context.beginPath();
         context.rect(projectile.x, projectile.y, shape.size, shape.size);
-        context.fillStyle = '#FF0000';
+        context.fillStyle = projectile.getColor(); //spaceCraft.player.color;
         context.fill();
 
     };
+
+    this.getColor = function(){
+        if(projectile.color === null){
+            var color = projectile.spaceCraft.player.color;
+            rgb = projectile.OpenSpace.hex2rgb(color);
+            rgb.r += parseInt(Math.random()*20);
+            if(rgb.r>255) rgb.r = 255;
+            rgb.g += parseInt(Math.random()*20);
+            if(rgb.g>255) rgb.g = 255;
+            rgb.b += parseInt(Math.random()*20);
+            if(rgb.b>255) rgb.b = 255;
+            projectile.color = projectile.OpenSpace.rgb2hex(rgb.r,rgb.g,rgb.b);
+            log(projectile.color);
+        }
+        return projectile.color;
+    }
 
     this.move = function(){
     	projectile.vector.mult(0.98);
