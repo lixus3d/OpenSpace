@@ -10,7 +10,7 @@ OBJECTS.scoreBoard = function(OpenSpaceObject){
 
 	this.draw = function(){
 		var context = scoreBoard.OpenSpace.drawer.context;
-		context.fillStyle = '#555';
+		context.fillStyle = '#AAAAAA';
 		var y = 70;
         context.fillText('Scores :',10,70);
         var sortedPlayer = [];
@@ -23,10 +23,11 @@ OBJECTS.scoreBoard = function(OpenSpaceObject){
 			sortedPlayer[key] = player;
         }
         sortedPlayer.reverse();
+        context.font = 'italic 20px Calibri';
         for( order in sortedPlayer){
-        	y += 14;
+        	y += 24;
         	var player = sortedPlayer[order];
-			context.fillStyle = player.color;
+			//context.fillStyle = player.color;
 			context.fillText(player.name+' '+player.score+' ('+player.killed+')',10,y);
         }
 	};
