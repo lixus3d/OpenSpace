@@ -66,7 +66,7 @@ OBJECTS.spaceCraft = function(OpenSpaceObject, playerObject, id){
         context.strokeStyle = 'black';
         context.stroke();
         context.fillStyle = '#555';
-        context.fillText(spaceCraft.life,spaceCraft.x-halfSize,spaceCraft.y+15);
+        context.fillText(spaceCraft.life+' '+spaceCraft.player.name,spaceCraft.x-halfSize,spaceCraft.y+15);
     };
 
     this.move = function(){
