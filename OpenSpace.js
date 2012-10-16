@@ -49,12 +49,10 @@ OBJECTS.OpenSpace = function(){
     };
 
     this.rgb2hex = function(r,g,b){
-        var rgb = [r.toString(16),g.toString(16),b.toString(16)];
+        var rgb = [ r.toString(16) , g.toString(16) , b.toString(16) ];
         for (var i=0;i<3;i++) {
-            if (rgb[i].length==1) rgb[i]=rgb[i]+rgb[i];
+            if (rgb[i].length==1) rgb[i]='0'+rgb[i];
         }
-        if(rgb[0][0]==rgb[0][1] && rgb[1][0]==rgb[1][1] && rgb[2][0]==rgb[2][1])
-            return '#'+rgb[0][0]+rgb[1][0]+rgb[2][0];
         return '#'+rgb[0]+rgb[1]+rgb[2];
     };
 
