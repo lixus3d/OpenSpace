@@ -1,4 +1,4 @@
-OBJECTS.projectile = function(OpenSpaceObject, spaceCraftObject, id){
+OBJECTS.projectile = function(OpenSpaceObject, spaceCraftObject, id, weaponDecay){
 
 	var projectile = this;
 
@@ -15,6 +15,7 @@ OBJECTS.projectile = function(OpenSpaceObject, spaceCraftObject, id){
     projectile.speed = 1;
     projectile.vector = new OBJECTS.vector();
     projectile.steering = 0;
+    projectile.weaponDecay = 0;
 
     projectile.rectangle = {
       size: 2
@@ -23,8 +24,9 @@ OBJECTS.projectile = function(OpenSpaceObject, spaceCraftObject, id){
 	this.setId = function(id){projectile.id = id;};
     this.getId = function(){return projectile.id;};
 
-    this.init = function(OpenSpaceObject, spaceCraftObject, id){
+    this.init = function(OpenSpaceObject, spaceCraftObject, id, weaponDecay){
         if(id===undefined) id = 0;
+        if(weaponDecay===undefined) weaponDecay = 0;
         projectile.setId(id);
         projectile.OpenSpace = OpenSpaceObject;
         projectile.spaceCraft = spaceCraftObject;
@@ -42,6 +44,17 @@ OBJECTS.projectile = function(OpenSpaceObject, spaceCraftObject, id){
 
         projectile.vector.normalize();
         projectile.vector.mult(projectile.speed);
+
+
+        projectile.weaponDecay = weaponDecay;
+        if(projectile.weaponDecay){
+            var perpendicular = projectile.vector.perpendicular(-1);
+            perpendicular.normalize();
+            perpendicular.mult(projectile.weaponDecay);
+            projectile.x += perpendicular.x;
+            projectile.y += perpendicular.y;
+        }
+
 
         projectile.addStack();
         //spaceCraft.steering
@@ -63,15 +76,19 @@ OBJECTS.projectile = function(OpenSpaceObject, spaceCraftObject, id){
     this.getColor = function(){
         if(projectile.color === null){
             var color = projectile.spaceCraft.player.color;
+            var decay = 150;
             rgb = projectile.OpenSpace.hex2rgb(color);
-            rgb.r += parseInt(Math.random()*20);
+            //log(rgb.r+' '+rgb.g+' '+rgb.b);
+
+            rgb.r += parseInt(Math.random()*decay,10);
             if(rgb.r>255) rgb.r = 255;
-            rgb.g += parseInt(Math.random()*20);
+            rgb.g += parseInt(Math.random()*decay,10);
             if(rgb.g>255) rgb.g = 255;
-            rgb.b += parseInt(Math.random()*20);
+            rgb.b += parseInt(Math.random()*decay,10);
             if(rgb.b>255) rgb.b = 255;
+            //log(rgb.r+' '+rgb.g+' '+rgb.b);
             projectile.color = projectile.OpenSpace.rgb2hex(rgb.r,rgb.g,rgb.b);
-            log(projectile.color);
+            //log(projectile.color);
         }
         return projectile.color;
     }
@@ -131,7 +148,8 @@ OBJECTS.projectile = function(OpenSpaceObject, spaceCraftObject, id){
                     x: projectile.vector.x,
                     y: projectile.vector.y
                 },
-                s: projectile.speed
+                s: projectile.speed,
+                d: projectile.weaponDecay
             });
         }
     };
@@ -150,5 +168,5 @@ OBJECTS.projectile = function(OpenSpaceObject, spaceCraftObject, id){
 
     };
 
-    this.init(OpenSpaceObject, spaceCraftObject, id);
+    this.init(OpenSpaceObject, spaceCraftObject, id, weaponDecay);
 }

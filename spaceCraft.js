@@ -17,6 +17,8 @@ OBJECTS.spaceCraft = function(OpenSpaceObject, playerObject, id){
     spaceCraft.steering = 0;
 
     spaceCraft.projectile = null;
+    spaceCraft.weaponDecay = 0;
+    spaceCraft.weaponDecayDirection = 1;
 
     spaceCraft.speedDo = null;
     spaceCraft.steeringDo = null;
@@ -159,7 +161,9 @@ OBJECTS.spaceCraft = function(OpenSpaceObject, playerObject, id){
     };
 
     this.shoot = function(){
-        spaceCraft.projectile = new OBJECTS.projectile(spaceCraft.OpenSpace,spaceCraft);
+        spaceCraft.weaponDecay += spaceCraft.weaponDecayDirection;
+        if( Math.abs(spaceCraft.weaponDecay) > RULES.config.spaceCraft.weaponDecay ) spaceCraft.weaponDecayDirection *= -1;
+        spaceCraft.projectile = new OBJECTS.projectile(spaceCraft.OpenSpace,spaceCraft,undefined,spaceCraft.weaponDecay);
         //log('shoot');
     };
 

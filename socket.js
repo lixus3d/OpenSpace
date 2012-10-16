@@ -41,10 +41,11 @@ OBJECTS.socket = function(OpenSpaceObject){
 				break;
 				case 'projectile':
 					var id = action.id;
+					var weaponDecay = action.d;
 					var spaceCraftId = action.scId;
 					var spaceCraftObject = socket.OpenSpace.units.getItemById(spaceCraftId);
 					if(!(object = socket.OpenSpace.units.getItemById(id))){ // If we can't get the item , we must create it
-						object = new OBJECTS.projectile(socket.OpenSpace, spaceCraftObject, id);
+						object = new OBJECTS.projectile(socket.OpenSpace, spaceCraftObject, id, weaponDecay);
 					}
 					object.x = action.x;
 					object.y = action.y;
