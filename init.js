@@ -28,7 +28,8 @@ var RULES = {
 			decelerate: 0.03,
 			breaking: 0.15,
 			steering: 0.005,
-			life: 400
+			life: 400,
+			weaponDecay: 4
 		},
 		weapon: {
 			lifeTime: 85,
